@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Generated schema for Root",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "idBoard": {
+      "type": "string"
+    },
+    "idChecklists": {
+      "type": "array",
+      "items": {}
+    },
+    "idLabels": {
+      "type": "array",
+      "items": {}
+    },
+    "idList": {
+      "type": "string"
+    },
+    "idMembers": {
+      "type": "array",
+      "items": {}
+    },
+    "idShort": {
+      "type": "number"
+    },
+    "idAttachmentCover": {},
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "idBoard",
+    "idChecklists",
+    "idLabels",
+    "idList",
+    "idMembers",
+    "idShort",
+    "idAttachmentCover",
+    "name"
+  ]
+}
