@@ -12,8 +12,8 @@ namespace RestSharpTest
 
         protected static IRestRequest RequestWithAuth(String endpoint) =>
             RequestWithoutAuth(endpoint)
-                .AddQueryParameter("key", "eb98438106f7eb8308aa3cb9d166457b")
-                .AddQueryParameter("token", "ATTAa74ad9c95079a0cb446a636c3e31fe3f62839f45a0976cb5bd8ce790cf7f46c5A03EDC4E");
+                .AddQueryParameter("key", System.Environment.GetEnvironmentVariable("TRELLO_AUTH_KEY"))
+                .AddQueryParameter("token", System.Environment.GetEnvironmentVariable("TRELLO_TOKEN"));
 
         protected static IRestRequest RequestWithoutAuth(String endpoint) =>
             new RestRequest(endpoint);
