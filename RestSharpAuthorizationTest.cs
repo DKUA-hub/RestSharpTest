@@ -1,34 +1,37 @@
 ﻿using RestSharp;
-using System.Net;
+using RestSharpTest.Arguments.Providers;
+using RestSharpTest.Arguments.Holders;
 
 namespace RestSharpTest
 {
     public class RestSharpAuthorizationTest : BaseClass
     {
         [Test]
-        public void CheckInvalidCardId() 
+        [TestCaseSource(typeof(CardIdArgumentsProvider))]
+        public void TestInvalidCardId(CardIdArgumentsHolder validationArguments) 
         {
             var request = RequestWithAuth("1/cards/{cardId}")
-                .AddUrlSegment("cardId", "65134c5117c9d3b7f9d22507");
+                .AddOrUpdateParameters(validationArguments.PathParams);
             var response = _client.Get(request);
 
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
-            Assert.That(response.Content, Is.EqualTo("The requested resource was not found."));
+            Assert.That(response.StatusCode, Is.EqualTo(validationArguments.StatusCode));
+            Assert.That(response.Content, Is.EqualTo(validationArguments.ErrorMessage));
         }
 
         [Test]
-        public void CheckAccessWithInvalidKey()
+        [TestCaseSource(typeof(CardIdAuthProvider))]
+        public void TestAccessWithInvalidKey(CardIdAuthHolder validationAuth)
         {
             var request = RequestWithoutAuth("1/cards/{cardId}")
-                .AddUrlSegment("cardId", "65134c5117c9d3b7f9d2250f")
-                .AddQueryParameter("key", "eb98438106f7eb8308aa3cb9d166457")
-                .AddQueryParameter("token", "ATTAa74ad9c95079a0cb446a636c3e31fe3f62839f45a0976cb5bd8ce790cf7f46c5A03EDC4E");
+                .AddOrUpdateParameters(validationAuth.PathParams)
+                .AddQueryParameter("key", validationAuth.Key)
+                .AddQueryParameter("token", validationAuth.Token);
             var response = _client.Get(request);
 
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-            Assert.That(response.Content, Is.EqualTo("invalid key"));
+            Assert.That(response.StatusCode, Is.EqualTo(validationAuth.StatusCode));
+            Assert.That(response.Content, Is.EqualTo(validationAuth.ErrorMessage));
         }
-
+/*
         [Test]
         public void CheckAccessWithInvalidToken()
         {
@@ -54,5 +57,6 @@ namespace RestSharpTest
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
             Assert.That(response.Content, Is.EqualTo("unauthorized card permission requested"));
         }
+*/
     }
 }
