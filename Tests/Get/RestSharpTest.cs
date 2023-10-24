@@ -1,18 +1,20 @@
 ﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
+using NUnit.Framework;
 using RestSharp;
+using RestSharpTest.Constants;
 using System.Net;
 
-namespace RestSharpTest
+namespace RestSharpTest.Tests.Get
 {
     public class RestSharpTest : BaseClass
     {
         [Test]
-        public void CheckCardsReturnCode() 
+        public void CheckCardsReturnCode()
         {
-            var request = RequestWithAuth("1/lists/{listId}/cards")
-                .AddQueryParameter("fields","id,name")
-                .AddUrlSegment("listId", "65134c3fc8a1a9c5e1c48d59");
+            var request = RequestWithAuth(CardsEndpoints.GET_ALL_CARDS)
+                .AddQueryParameter("fields", "id,name")
+                .AddUrlSegment("listId", UrlParametersValues.LIST_ID);
             IRestResponse response = _client.Get(request);
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -22,11 +24,11 @@ namespace RestSharpTest
         }
 
         [Test]
-        public void CheckCardsName() 
+        public void CheckCardsName()
         {
-            var request = RequestWithAuth("1/cards/{cardId}")
+            var request = RequestWithAuth(CardsEndpoints.GET_CARD)
                 .AddQueryParameter("fields", "idBoard,idChecklists,idLabels,idList,idMembers,idShort,idAttachmentCover,name")
-                .AddUrlSegment("cardId", "65134c5117c9d3b7f9d2250f");
+                .AddUrlSegment("cardId", UrlParametersValues.CARD_ID);
             var response = _client.Get(request);
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
