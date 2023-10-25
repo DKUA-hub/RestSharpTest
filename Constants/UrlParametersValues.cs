@@ -12,6 +12,7 @@ namespace RestSharpTest.Constants
         public const string URL     = "https://api.trello.com/";
         public const string LIST_ID = "65134c3fc8a1a9c5e1c48d59";
         public const string CARD_ID = "65134c5117c9d3b7f9d2250f";
+        public const string ANOTHER_USER_LIST_ID = "60d84769c4ce7a09f9140221";
 
         public static string VALID_KEY   = Environment.GetEnvironmentVariable("TRELLO_AUTH_KEY");
         public static string VALID_TOKEN = Environment.GetEnvironmentVariable("TRELLO_TOKEN");

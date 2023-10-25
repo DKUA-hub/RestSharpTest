@@ -6,7 +6,7 @@ using System.Net;
 
 namespace RestSharpTest.Tests.Create
 {
-    internal class CreateBoardTest : BaseClass
+    internal class CreateCardTest : BaseClass
     {
         private string _createdCardId;
         [Test]
