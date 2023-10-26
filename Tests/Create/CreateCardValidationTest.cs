@@ -39,7 +39,6 @@ namespace RestSharpTest.Tests.Create
                 .AddJsonBody(new { name = cardName, idList = UrlParametersValues.LIST_ID });
             var response = _client.Post(request);
 
-
             string responseContent = response.Content;
 
             Assert.AreEqual(validationAuth.StatusCode, response.StatusCode);

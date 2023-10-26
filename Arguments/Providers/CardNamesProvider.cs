@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+﻿ using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using RestSharpTest.Arguments.Holders;
 using RestSharpTest.Constants;
 using System;

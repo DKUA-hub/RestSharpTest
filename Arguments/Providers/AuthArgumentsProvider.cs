@@ -40,7 +40,7 @@ namespace RestSharpTest.Arguments.Providers
                     AuthParams = new []{ new Parameter("token", UrlParametersValues.VALID_TOKEN, ParameterType.QueryString)},
                     PathParameter = new[] {new Parameter("cardId", UrlParametersValues.CARD_ID, ParameterType.UrlSegment)},
                     StatusCode = HttpStatusCode.Unauthorized,
-                    Message = "invalid key"
+                    Message = "invalid app key"
                 }
             };
 
