@@ -13,7 +13,7 @@ namespace RestSharpTest.Constants
         public const string LIST_ID = "65134c3fc8a1a9c5e1c48d59";
         public const string CARD_ID = "65134c5117c9d3b7f9d2250f";
         
-        public const string CARD_ID_TO_UPDATE    = "65382a991e43d37401766fc1";
+        public const string CARD_ID_TO_UPDATE    = "6515a0b118eaee89ad91ae9b";
         public const string INVALID_CARD_ID      = "65134c5117c9d3b7f9d2250";
         public const string ANOTHER_USER_CARD_ID = "60e03f7ff7c9234efd7ed41f";
         public const string ANOTHER_USER_LIST_ID = "60d84769c4ce7a09f9140221";
