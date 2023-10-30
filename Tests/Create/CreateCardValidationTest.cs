@@ -16,11 +16,11 @@ namespace RestSharpTest.Tests.Create
     {
         [Test]
         [TestCaseSource(typeof(CardNamesProvider))]
-        public void TestCreateCardWithInvalidParameters(CardNamesHolder cardNames)
+        public async Task TestCreateCardWithInvalidParameters(CardNamesHolder cardNames)
         {
-            var request = RequestWithAuth(CardsEndpoints.CREATE_CARD)
+            var request = RequestWithAuth(CardsEndpoints.CREATE_CARD, Method.Post)
                 .AddJsonBody(cardNames.RequestBody);
-            var response = _client.Post(request);
+            var response = await _client.ExecuteAsync(request);
 
             string responseContent = response.Content;
 
@@ -31,13 +31,13 @@ namespace RestSharpTest.Tests.Create
 
         [Test]
         [TestCaseSource(typeof(CardAuthArgumentsProvider))]
-        public void TestCreateCardWithInvalidAuth(AuthArgumentsHolder validationAuth)
+        public async Task TestCreateCardWithInvalidAuth(AuthArgumentsHolder validationAuth)
         {
             string cardName = "QA Framework new card test";
-            var request = RequestWithoutAuth(CardsEndpoints.CREATE_CARD)
+            var request = RequestWithoutAuth(CardsEndpoints.CREATE_CARD, Method.Post)
                 .AddOrUpdateParameters(validationAuth.AuthParams)
                 .AddJsonBody(new { name = cardName, idList = UrlParametersValues.LIST_ID });
-            var response = _client.Post(request);
+            var response = await _client.ExecuteAsync(request);
 
             string responseContent = response.Content;
 

@@ -10,11 +10,11 @@ namespace RestSharpTest.Tests.Get
     {
         [Test]
         [TestCaseSource(typeof(CardIdArgumentsProvider))]
-        public void TestInvalidCardId(CardIdArgumentsHolder validationArguments)
+        public async Task TestInvalidCardId(CardIdArgumentsHolder validationArguments)
         {
-            var request = RequestWithAuth(CardsEndpoints.GET_CARD)
+            var request = RequestWithAuth(CardsEndpoints.GET_CARD, Method.Get)
                 .AddOrUpdateParameters(validationArguments.PathParams);
-            var response = _client.Get(request);
+            var response = await _client.ExecuteAsync(request);
 
             Assert.That(response.StatusCode, Is.EqualTo(validationArguments.StatusCode));
             Assert.That(response.Content, Is.EqualTo(validationArguments.ErrorMessage));
@@ -22,13 +22,13 @@ namespace RestSharpTest.Tests.Get
 
         [Test]
         [TestCaseSource(typeof(CardIdAuthProvider))]
-        public void TestAccessWithInvalidKey(CardIdAuthHolder validationAuth)
+        public async Task TestAccessWithInvalidKey(CardIdAuthHolder validationAuth)
         {
-            var request = RequestWithoutAuth(CardsEndpoints.GET_CARD)
+            var request = RequestWithoutAuth(CardsEndpoints.GET_CARD, Method.Get)
                 .AddOrUpdateParameters(validationAuth.PathParams)
                 .AddQueryParameter("key", validationAuth.Key)
                 .AddQueryParameter("token", validationAuth.Token);
-            var response = _client.Get(request);
+            var response = await _client.ExecuteAsync(request);
 
             Assert.That(response.StatusCode, Is.EqualTo(validationAuth.StatusCode));
             Assert.That(response.Content, Is.EqualTo(validationAuth.ErrorMessage));
@@ -36,12 +36,12 @@ namespace RestSharpTest.Tests.Get
 
         [Test]
         [TestCaseSource(typeof(AuthArgumentsProvider))]
-        public void TestAuthProcess(AuthArgumentsHolder validationAuth)
+        public async Task TestAuthProcess(AuthArgumentsHolder validationAuth)
         {
-            var request = RequestWithoutAuth(CardsEndpoints.GET_CARD)
+            var request = RequestWithoutAuth(CardsEndpoints.GET_CARD, Method.Get)
                 .AddOrUpdateParameters(validationAuth.AuthParams)
                 .AddOrUpdateParameters(validationAuth.PathParameter);
-            var response = _client.Get(request);
+            var response = await _client.ExecuteAsync(request);
 
             Assert.That(response.StatusCode, Is.EqualTo(validationAuth.StatusCode));
             Assert.That(response.Content, Is.EqualTo(validationAuth.Message));

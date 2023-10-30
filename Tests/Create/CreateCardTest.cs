@@ -10,12 +10,12 @@ namespace RestSharpTest.Tests.Create
     {
         private string _createdCardId;
         [Test]
-        public void TestCreateBoard()
+        public async Task TestCreateBoardAsync()
         {
             string cardName = "NewBoard" + DateTime.Now.ToLongTimeString();
-            var request = RequestWithAuth(CardsEndpoints.CREATE_CARD)
+            var request = RequestWithAuth(CardsEndpoints.CREATE_CARD, Method.Post)
                 .AddJsonBody(new {name=cardName, idList=UrlParametersValues.LIST_ID});
-            var response = _client.Post(request);
+            var response = await _client.ExecuteAsync(request);
 
             var responseContent = JToken.Parse(response.Content);
             _createdCardId = responseContent.SelectToken("id").ToString();
@@ -23,26 +23,26 @@ namespace RestSharpTest.Tests.Create
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.AreEqual(cardName, responseContent.SelectToken("name").ToString());
 
-            request = RequestWithAuth(CardsEndpoints.GET_ALL_CARDS)
+            request = RequestWithAuth(CardsEndpoints.GET_ALL_CARDS, Method.Get)
                 .AddUrlSegment("listId", UrlParametersValues.LIST_ID);
-            response = _client.Get(request);
+            response = await _client.ExecuteAsync(request);
 
             responseContent = JToken.Parse(response.Content);
             Assert.True(responseContent.Children().Select(token => token.SelectToken("name").ToString()).Contains(cardName));
         }
 
         [TearDown]
-        public void DeleteCreatedCard()
+        public async Task DeleteCreatedCard()
         {
-            var request = RequestWithAuth(CardsEndpoints.DELETE_CARD)
+            var request = RequestWithAuth(CardsEndpoints.DELETE_CARD, Method.Delete)
                 .AddUrlSegment("cardId", _createdCardId);
-            var response = _client.Delete(request);
+            var response = await _client.ExecuteAsync(request);
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
-            request = RequestWithAuth(CardsEndpoints.GET_ALL_CARDS)
+            request = RequestWithAuth(CardsEndpoints.GET_ALL_CARDS, Method.Get)
                 .AddUrlSegment("listId", UrlParametersValues.LIST_ID);
-            response = _client.Get(request);
+            response = await _client.ExecuteAsync(request);
 
             var responseContent = JToken.Parse(response.Content);
             Assert.False(responseContent.Children().Select(token => token.SelectToken("id").ToString()).Contains(_createdCardId));

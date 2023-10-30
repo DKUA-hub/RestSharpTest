@@ -12,11 +12,11 @@ namespace RestSharpTest.Tests
         public static void InitializeRestClient() =>
             _client = new RestClient(UrlParametersValues.URL);
 
-        protected static IRestRequest RequestWithAuth(string endpoint) =>
-            RequestWithoutAuth(endpoint)
+        protected static RestRequest RequestWithAuth(string endpoint, Method method) =>
+            RequestWithoutAuth(endpoint, method)
                 .AddOrUpdateParameters(UrlParametersValues.AUTH_CREDENTIALS);
 
-        protected static IRestRequest RequestWithoutAuth(string endpoint) =>
-            new RestRequest(endpoint);
+        protected static RestRequest RequestWithoutAuth(string endpoint, Method method) =>
+            new RestRequest(endpoint, method);
     }
 }

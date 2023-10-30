@@ -27,20 +27,20 @@ namespace RestSharpTest.Constants
 
         public static IEnumerable<Parameter> AUTH_CREDENTIALS = new[]
         {
-            new Parameter ("key",   VALID_KEY, ParameterType.QueryString),
-            new Parameter ("token", VALID_TOKEN, ParameterType.QueryString)
+            Parameter.CreateParameter ("key",   VALID_KEY, ParameterType.QueryString),
+            Parameter.CreateParameter ("token", VALID_TOKEN, ParameterType.QueryString)
         };
 
         public static IEnumerable<Parameter> INVALID_AUTH_CREDENTIALS = new[]
         {
-            new Parameter ("key",   INVALID_KEY, ParameterType.QueryString),
-            new Parameter ("token", INVALID_TOKEN, ParameterType.QueryString)
+            Parameter.CreateParameter ("key",   INVALID_KEY, ParameterType.QueryString),
+            Parameter.CreateParameter ("token", INVALID_TOKEN, ParameterType.QueryString)
         };
 
         public static IEnumerable<Parameter> ANOTHER_USER_AUTH_CREDENTIALS = new[]
         {
-            new Parameter ("key",   "fb04999a731923c2e3137153b1ad5de0", ParameterType.QueryString),
-            new Parameter ("token", "b73120fb537fceb444050a2a4c08e2f96f47389931bd80253d2440708f2a57e1", ParameterType.QueryString)
+            Parameter.CreateParameter ("key",   "fb04999a731923c2e3137153b1ad5de0", ParameterType.QueryString),
+            Parameter.CreateParameter ("token", "b73120fb537fceb444050a2a4c08e2f96f47389931bd80253d2440708f2a57e1", ParameterType.QueryString)
         };
     }
 }

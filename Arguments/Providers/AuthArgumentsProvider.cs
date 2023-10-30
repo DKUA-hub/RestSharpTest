@@ -15,7 +15,7 @@ namespace RestSharpTest.Arguments.Providers
                 new AuthArgumentsHolder
                 {
                     AuthParams = ArraySegment<Parameter>.Empty,
-                    PathParameter = new [] { new Parameter("cardId", UrlParametersValues.CARD_ID, ParameterType.UrlSegment) },
+                    PathParameter = new [] {Parameter.CreateParameter("cardId", UrlParametersValues.CARD_ID, ParameterType.UrlSegment) },
                     StatusCode = HttpStatusCode.Unauthorized,
                     Message = "unauthorized card permission requested"
 
@@ -26,8 +26,8 @@ namespace RestSharpTest.Arguments.Providers
             {
                 new AuthArgumentsHolder
                 {
-                    AuthParams = new []{ new Parameter("key", UrlParametersValues.VALID_KEY, ParameterType.QueryString)},
-                    PathParameter = new[] {new Parameter("cardId", UrlParametersValues.CARD_ID, ParameterType.UrlSegment)},
+                    AuthParams = new []{ Parameter.CreateParameter("key", UrlParametersValues.VALID_KEY, ParameterType.QueryString)},
+                    PathParameter = new[] { Parameter.CreateParameter("cardId", UrlParametersValues.CARD_ID, ParameterType.UrlSegment)},
                     StatusCode = HttpStatusCode.Unauthorized,
                     Message = "unauthorized card permission requested"
                 }
@@ -37,8 +37,8 @@ namespace RestSharpTest.Arguments.Providers
             {
                 new AuthArgumentsHolder
                 {
-                    AuthParams = new []{ new Parameter("token", UrlParametersValues.VALID_TOKEN, ParameterType.QueryString)},
-                    PathParameter = new[] {new Parameter("cardId", UrlParametersValues.CARD_ID, ParameterType.UrlSegment)},
+                    AuthParams = new []{ Parameter.CreateParameter("token", UrlParametersValues.VALID_TOKEN, ParameterType.QueryString)},
+                    PathParameter = new[] { Parameter.CreateParameter("cardId", UrlParametersValues.CARD_ID, ParameterType.UrlSegment)},
                     StatusCode = HttpStatusCode.Unauthorized,
                     Message = "invalid app key"
                 }
@@ -49,7 +49,7 @@ namespace RestSharpTest.Arguments.Providers
                 new AuthArgumentsHolder
                 {
                     AuthParams = UrlParametersValues.INVALID_AUTH_CREDENTIALS,
-                    PathParameter = new[] {new Parameter("cardId", UrlParametersValues.CARD_ID, ParameterType.UrlSegment)},
+                    PathParameter = new[] { Parameter.CreateParameter("cardId", UrlParametersValues.CARD_ID, ParameterType.UrlSegment)},
                     StatusCode = HttpStatusCode.Unauthorized,
                     Message = "invalid token"
                 }

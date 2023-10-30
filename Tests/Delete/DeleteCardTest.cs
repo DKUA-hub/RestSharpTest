@@ -18,7 +18,7 @@ namespace RestSharpTest.Tests.Delete
         [SetUp]
         public void CreateCard()
         {
-            var request = RequestWithAuth(CardsEndpoints.CREATE_CARD)
+            var request = RequestWithAuth(CardsEndpoints.CREATE_CARD, Method.Post)
                 .AddJsonBody(new Dictionary<string, string> { 
                     { "name", "QA Framework: card for deletion" },
                     { "idList", UrlParametersValues.LIST_ID }
@@ -31,18 +31,18 @@ namespace RestSharpTest.Tests.Delete
         }
 
         [Test]
-        public void TestDeleteCard()
+        public async Task TestDeleteCard()
         {
-            var request = RequestWithAuth(CardsEndpoints.DELETE_CARD)
+            var request = RequestWithAuth(CardsEndpoints.DELETE_CARD, Method.Delete)
                 .AddUrlSegment("cardId", _cardIdToDelete);
-            var response = _client.Delete(request);
+            var response = await _client.ExecuteAsync(request);
                         
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.AreEqual("{}", JToken.Parse(response.Content).SelectToken("limits").ToString());
 
-            request = RequestWithAuth(CardsEndpoints.GET_ALL_CARDS)
+            request = RequestWithAuth(CardsEndpoints.GET_ALL_CARDS, Method.Get)
                 .AddUrlSegment("listId", UrlParametersValues.LIST_ID);
-            response = _client.Get(request);
+            response = await _client.ExecuteAsync(request);
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.False(JToken.Parse(response.Content).Any(item => item["id"]?.Value<string>() == _cardIdToDelete));

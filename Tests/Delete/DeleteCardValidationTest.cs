@@ -15,11 +15,11 @@ namespace RestSharpTest.Tests.Delete
     {
         [Test]
         [TestCaseSource(typeof(CardIdArgumentsProvider))]
-        public void TestDeleteCardWithInvalidName(CardIdArgumentsHolder deleteArguments)
+        public async Task TestDeleteCardWithInvalidName(CardIdArgumentsHolder deleteArguments)
         {
-            var request = RequestWithAuth(CardsEndpoints.DELETE_CARD)
+            var request = RequestWithAuth(CardsEndpoints.DELETE_CARD, Method.Delete)
                 .AddOrUpdateParameters(deleteArguments.PathParams);
-            var response = _client.Delete(request);
+            var response = await _client.ExecuteAsync(request);
 
             Assert.AreEqual(deleteArguments.StatusCode, response.StatusCode);
             Assert.AreEqual(deleteArguments.ErrorMessage, response.Content);
@@ -27,12 +27,12 @@ namespace RestSharpTest.Tests.Delete
 
         [Test]
         [TestCaseSource(typeof(CardAuthArgumentsProvider))]
-        public void TestDeleteCardWithInvalidAuth(AuthArgumentsHolder deleteArguments)
+        public async Task TestDeleteCardWithInvalidAuth(AuthArgumentsHolder deleteArguments)
         {
-            var request = RequestWithoutAuth(CardsEndpoints.DELETE_CARD)
+            var request = RequestWithoutAuth(CardsEndpoints.DELETE_CARD, Method.Delete)
                 .AddOrUpdateParameters(deleteArguments.AuthParams)
                 .AddOrUpdateParameters(deleteArguments.PathParameter);
-            var response = _client.Delete(request);
+            var response = await _client.ExecuteAsync(request);
 
             Assert.AreEqual(deleteArguments.StatusCode, response.StatusCode);
             Assert.AreEqual(deleteArguments.Message, response.Content);

@@ -17,13 +17,13 @@ namespace RestSharpTest.Tests.Update
     {
         [Test]
         [TestCaseSource(typeof(CardIdPutArgumentsProvider))]
-        public void TestUpdateCardInvalidParameters(CardIdPutArgumentsHolder updateArguments)
+        public async Task TestUpdateCardInvalidParametersAsync(CardIdPutArgumentsHolder updateArguments)
         {
-            var request = RequestWithAuth(CardsEndpoints.UPDATE_CARD)
+            var request = RequestWithAuth(CardsEndpoints.UPDATE_CARD, Method.Put)
                 .AddOrUpdateParameters(updateArguments.PathParam)
                 .AddJsonBody(updateArguments.Body);
 
-            var response = _client.Put(request);
+            var response = await _client.ExecuteAsync(request);
 
             Assert.AreEqual(updateArguments.StatusCode, response.StatusCode);
             Assert.AreEqual(updateArguments.Message, response.Content);
@@ -32,16 +32,16 @@ namespace RestSharpTest.Tests.Update
 
         [Test]
         [TestCaseSource(typeof(CardAuthArgumentsProvider))]
-        public void TestUpdateCardInvalidAuth(AuthArgumentsHolder validationAuth)
+        public async Task TestUpdateCardInvalidAuthAsync(AuthArgumentsHolder validationAuth)
         {
-            var request = RequestWithoutAuth(CardsEndpoints.UPDATE_CARD)
+            var request = RequestWithoutAuth(CardsEndpoints.UPDATE_CARD, Method.Put)
                 .AddOrUpdateParameters(validationAuth.AuthParams)
                 .AddOrUpdateParameters(validationAuth.PathParameter)
                 .AddJsonBody(new 
                 { 
                     name = "QA Framework: updated card name"
                 });
-            var response = _client.Put(request);
+            var response = await _client.ExecuteAsync(request);
 
 
             string responseContent = response.Content;
